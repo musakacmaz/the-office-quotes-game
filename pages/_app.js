@@ -30,7 +30,6 @@ function MyApp({ Component, pageProps }) {
         dark: darkTheme.className,
       }}
     >
-      {" "}
       <NextUIProvider>
         <Component {...pageProps} />
       </NextUIProvider>
