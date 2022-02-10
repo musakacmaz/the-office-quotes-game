@@ -24,12 +24,15 @@ import { buildChoices } from "../utils";
 import { useSWRConfig } from "swr";
 import confetti from "canvas-confetti";
 
+let choices;
+
 export default function Home() {
   const { setTheme } = useNextTheme();
   const { isDark, type } = useTheme();
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [flag, setFlag] = useState(true);
   const { mutate } = useSWRConfig();
 
   const {
@@ -62,7 +65,9 @@ export default function Home() {
   }
 
   const { content, character: quoteOwner } = quote.data;
-  const choices = buildChoices(quoteOwner, characters.data);
+  if (flag) {
+    choices = buildChoices(quoteOwner, characters.data);
+  }
 
   return (
     <div className={styles.container}>
@@ -78,7 +83,10 @@ export default function Home() {
             shadow
             color="secondary"
             initialChecked={isDark}
-            onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+            onChange={(e) => {
+              setTheme(e.target.checked ? "dark" : "light");
+              setFlag(false);
+            }}
             iconOn={<FontAwesomeIcon icon={faSun} />}
             iconOff={<FontAwesomeIcon icon={faMoon} />}
           />
@@ -129,6 +137,7 @@ export default function Home() {
                 mutate("/api/quote");
                 setScore(0);
                 setIsGameOver(false);
+                setFlag(true);
               }}
             >
               Play Again
@@ -141,6 +150,7 @@ export default function Home() {
 
   function handleClick(choice) {
     setIsLoading(true);
+    setFlag(true);
     if (choice.isOwner) {
       confetti({
         zIndex: 999,
