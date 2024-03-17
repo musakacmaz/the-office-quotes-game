@@ -28,5 +28,5 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## ⚖️ License
-[MIT © musa kaçmaz](https://musakacmaz.mit-license.org)
 
+[MIT © musa kaçmaz](https://musakacmaz.mit-license.org)
