@@ -11,7 +11,7 @@ Game is available to play at [here](https://the-office-quotes-game.vercel.app).
 
 ## 🎨 Design
 
-[NextUI](https://nextui.org) has been used as UI library.
+[HeroUI](https://www.heroui.com) has been used as UI library.
 
 ## 🚀 Setup & Run
 

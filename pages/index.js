@@ -6,16 +6,7 @@ import useQuote from "../hooks/useQuote";
 import useCharacters from "../hooks/useCharacters";
 import { useState } from "react";
 import { useTheme as useNextTheme } from "next-themes";
-import {
-  Switch,
-  useTheme,
-  Loading,
-  Text,
-  Grid,
-  Spacer,
-  Card,
-  Button,
-} from "@nextui-org/react";
+import { Switch, Spinner, Card, Button } from "@heroui/react";
 import { faSun, faMoon, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Choices from "../components/choices";
@@ -27,8 +18,9 @@ import confetti from "canvas-confetti";
 let choices;
 
 export default function Home() {
-  const { setTheme } = useNextTheme();
-  const { isDark, type } = useTheme();
+  const { setTheme, resolvedTheme } = useNextTheme();
+  const isDark = resolvedTheme === "dark";
+  const type = resolvedTheme;
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,17 +42,16 @@ export default function Home() {
   if (isLoading || isLoadingQuote || isLoadingCharacters) {
     return (
       <div className={styles.main}>
-        {" "}
-        <Loading type="gradient" />{" "}
+        <Spinner />
       </div>
     );
   }
 
   if (isErrorQuote || isErrorCharacters) {
     return (
-      <Text h1 color="error">
+      <p style={{ color: "#e00", fontWeight: 700, fontSize: "1.25rem" }}>
         Error while fetching data!
-      </Text>
+      </p>
     );
   }
 
@@ -77,8 +68,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Grid.Container gap={2} justify="space-evenly">
-        <Grid xs className={styles.display}>
+      <div className={styles.headerRow}>
+        <div className={styles.display}>
           <Switch
             shadow
             color="secondary"
@@ -90,8 +81,8 @@ export default function Home() {
             iconOn={<FontAwesomeIcon icon={faSun} />}
             iconOff={<FontAwesomeIcon icon={faMoon} />}
           />
-        </Grid>
-        <Grid xs className={styles.display}>
+        </div>
+        <div className={styles.display}>
           <Link href="https://github.com/musakacmaz/the-office-quotes-game">
             <a>
               <span className={styles.logo}>
@@ -104,32 +95,25 @@ export default function Home() {
               </span>
             </a>
           </Link>
-        </Grid>
-      </Grid.Container>
+        </div>
+      </div>
 
       <main className={styles.main}>
         <Scoreboard score={score} />
         {!isGameOver ? (
           <>
-            <Text blockquote>{content}</Text>
-            <Spacer y={1} />
+            <blockquote className={styles.blockquote}>{content}</blockquote>
+            <div style={{ height: 16 }} />
             <Choices choices={choices} onClick={handleClick}></Choices>
           </>
         ) : (
           <>
             <Card color="error">
-              <Text
-                css={{
-                  fontWeight: "$bold",
-                  color: "$white",
-                  textAlign: "center",
-                }}
-                transform="capitalize"
-              >
+              <p style={{ fontWeight: 700, color: "#fff", textAlign: "center", textTransform: "capitalize" }}>
                 Game Over!
-              </Text>
+              </p>
             </Card>
-            <Spacer y={1} />
+            <div style={{ height: 16 }} />
             <Button
               icon={<FontAwesomeIcon icon={faPlay} />}
               color="success"

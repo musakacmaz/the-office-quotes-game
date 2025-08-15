@@ -1,4 +1,4 @@
-import { Text } from "@nextui-org/react";
+import { Text } from "@heroui/react";
 
 export default function Scoreboard({ score }) {
   return (
