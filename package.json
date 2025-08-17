@@ -23,13 +23,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fn:dev:quote": "supabase functions serve random-quote --env-file .env.local",
+    "fn:dev:characters": "supabase functions serve get-characters --env-file .env.local",
+    "fn:deploy": "supabase functions deploy random-quote && supabase functions deploy get-characters"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@heroui/react": "^2.8.2",
+    "@supabase/supabase-js": "^2.55.0",
     "axios": "^1.11.0",
     "canvas-confetti": "^1.9.3",
     "next": "^15.4.6",
@@ -46,6 +50,7 @@
     "eslint": "9.33.0",
     "eslint-config-next": "15.4.6",
     "postcss": "^8.5.6",
+    "supabase": "^2.34.3",
     "tailwindcss": "^4.1.12"
   }
 }
