@@ -12,7 +12,6 @@ export default async function handler(req, res) {
   const qs = character ? `?character=${encodeURIComponent(character)}` : "";
 
   try {
-    console.info("Request URL:", `${base}/v1/random-quote${qs}`);
     const r = await fetch(`${base}/v1/random-quote${qs}`, {
       headers: {
         Authorization: `Bearer ${anon}`,
